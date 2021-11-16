@@ -5,11 +5,13 @@ type CartItemType = {
     imgSrc:string
     title:string
     synopsis:string
+    key:number
 }
-export const CartItem:FC<CartItemType> = ({imgSrc, title, synopsis}) => {
+export const CartItem:FC<CartItemType> = ({imgSrc, title, synopsis, key}) => {
   const { Meta } = Card;
   return (
     <Card
+      key={key}
       hoverable
       style={{ width: 240 }}
       cover={

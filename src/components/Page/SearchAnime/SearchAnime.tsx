@@ -22,7 +22,9 @@ export const SearchAnime = () => {
             <InputSearch setTitleAnime={setTitleAnime}/>
             <Row xs={1} md={3} className="g-2">
             {animeList && animeList.map(item => 
+                         
                <CartItem 
+               key={item.mal_id}
                imgSrc={item.image_url}
                title={item.title}
                synopsis={item.synopsis}/>
