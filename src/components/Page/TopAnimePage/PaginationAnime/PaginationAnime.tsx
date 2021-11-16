@@ -12,7 +12,6 @@ export const PaginationAnime: FC<PaginationAnimeType> = ({
   };
 
   return (
-    <div>
       <Pagination
         defaultCurrent={1}
         defaultPageSize={1}
@@ -20,6 +19,5 @@ export const PaginationAnime: FC<PaginationAnimeType> = ({
         onChange={(current) => onClickActiv(current)}
         showQuickJumper
       />
-    </div>
   );
 };

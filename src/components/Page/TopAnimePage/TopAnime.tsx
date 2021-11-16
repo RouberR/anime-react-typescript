@@ -21,8 +21,8 @@ export const TopAnime = () => {
   const onClickPagintor = (id: number) => {
     setPageNumber(id);
   };
+
   return (
-    <>
       <Container>
         <Row xs={1} md={3} className="g-2">
           <TopAnimeItem items={topAnime} loading={loading} />
@@ -31,6 +31,5 @@ export const TopAnime = () => {
           <PaginationAnime onClickPagintor={onClickPagintor} />
         </Row>
       </Container>
-    </>
   );
 };

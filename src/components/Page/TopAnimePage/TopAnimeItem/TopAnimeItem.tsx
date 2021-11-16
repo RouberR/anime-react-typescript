@@ -17,7 +17,7 @@ export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading }) => {
               className="mb-2"
               style={{ width: "20rem" }}
             >
-              <Spin className="example" size={"large"} spinning={loading}/>
+              <Spin className="example" size={"large"} spinning={loading} />
               <Card.Body>
                 <Card.Title>Загрузка данных</Card.Title>
               </Card.Body>
