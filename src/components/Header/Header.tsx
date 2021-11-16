@@ -1,0 +1,18 @@
+import React from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import {NavLink} from "react-router-dom";
+export const HeaderMenu = () => {
+  return (
+    <Navbar bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand as = {NavLink} to="/">Anime TOP</Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link as = {NavLink} to="/">Home</Nav.Link>
+          <Nav.Link as = {NavLink} to="/Search">Search Anime</Nav.Link>
+          <Nav.Link as = {NavLink} to="/MyTop">My Top</Nav.Link>
+          <Nav.Link as = {NavLink} to="/TopAnime">Top Anime</Nav.Link>
+        </Nav>
+      </Container>
+    </Navbar>
+  );
+};

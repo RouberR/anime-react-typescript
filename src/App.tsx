@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { Page } from "./components/Page/Index";
+import { Routes, Route } from "react-router-dom";
+import { TopAnime } from "./components/Page/TopAnimePage/TopAnime";
+import { Col, Container, Row } from "react-bootstrap";
+import { HeaderMenu } from "./components/Header/Header";
+import { UserTop } from "./components/Page/MyTop/UserTop";
+import { SearchAnime } from "./components/Page/SearchAnime/SearchAnime";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <HeaderMenu />
+          </Col>
+        </Row>
+      </Container>
+
+      <Routes>
+        <Route path="/" element={<Page />} />
+        <Route path="/TopAnime" element={<TopAnime />} />
+        <Route path="/MyTop" element={<UserTop/>} />
+        <Route path="/Search" element={<SearchAnime/>} />
+      </Routes>
+    </>
   );
 }
 
