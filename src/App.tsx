@@ -5,8 +5,9 @@ import { Col, Container, Row } from "react-bootstrap";
 import { HeaderMenu } from "./components/Header/Header";
 import { UserTop } from "./components/Page/MyTop/UserTop";
 import { SearchAnime } from "./components/Page/SearchAnime/SearchAnime";
-import { Authentication } from "./components/Page/Authentication/Authentication";
+import { Register } from "./components/Page/Authentication/Register";
 import { Login } from "./components/Page/Authentication/Login";
+import { Cart } from "./components/Page/Authentication/Cart";
 function App() {
   return (
     <>
@@ -23,7 +24,8 @@ function App() {
         <Route path="/TopAnime" element={<TopAnime />} />
         <Route path="/MyTop" element={<UserTop/>} />
         <Route path="/Search" element={<SearchAnime/>} />
-        <Route path="/Login" element={<Login/>} />
+        <Route path="/Login" element={<Cart/>} />
+        <Route path="/Register" element={<Register/>} />
       </Routes>
     </>
   );
