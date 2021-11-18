@@ -5,11 +5,10 @@ import { getAnalytics } from "firebase/analytics";
 import {
     getAuth, createUserWithEmailAndPassword, 
     onAuthStateChanged, signOut,
-     signInWithEmailAndPassword} from "firebase/auth";
+     signInWithEmailAndPassword} from "firebase/auth";  
 import { useEffect, useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -44,7 +43,7 @@ export function useAuth(){
        const unsub = onAuthStateChanged(auth, user  => setCurrentUser(user))
         return unsub
     },[])
-    
+    console.log(currentUser)
     return currentUser
 }
 
@@ -52,3 +51,15 @@ export function useAuth(){
 export function logout(){
     return signOut(auth)
 }
+
+/////Fire 
+
+// const db = getFirestore();
+// export function writeUserData(userId, name, email) {
+//     const db = getDatabase();
+//     set(ref(db, 'users/' + userId), {
+//       username: name,
+//       email: email,
+//     });
+//   }
+  

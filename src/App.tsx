@@ -1,4 +1,4 @@
-import { Page } from "./components/Page/Index";
+import { Home } from "./components/Page/Home/Home";
 import { Routes, Route } from "react-router-dom";
 import { TopAnime } from "./components/Page/TopAnimePage/TopAnime";
 import { Col, Container, Row } from "react-bootstrap";
@@ -20,7 +20,7 @@ function App() {
       </Container>
 
       <Routes>
-        <Route path="/" element={<Page />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/TopAnime" element={<TopAnime />} />
         <Route path="/MyTop" element={<UserTop/>} />
         <Route path="/Search" element={<SearchAnime/>} />

@@ -5,19 +5,21 @@ import { Container, Row } from 'react-bootstrap';
 import { signup, useAuth } from '../../../firebase';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { doc, setDoc, getFirestore } from "firebase/firestore"; 
 const provider = new GoogleAuthProvider();
 export const Register = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const currentUser:any = useAuth();
     const nabigate = useNavigate()
-    
+    const db = getFirestore();
      async function onFinish(values: any){
         setLoading(true)
          try{
              await signup(values.username, values.password)
              console.log('Success:', values);
              console.log("Пользователь создан")
+             await setDoc(doc(db, "users", values.username), {});
              nabigate("/");
          } catch{
           setError(true)
