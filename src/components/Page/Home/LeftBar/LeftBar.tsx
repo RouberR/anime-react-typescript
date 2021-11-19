@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "@firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 import { Button } from "antd";
-export const LeftBar = () => {
+type LeftBarType = {
+  setActiveUser:any
+}
+export const LeftBar:FC<LeftBarType> = ({setActiveUser}) => {
   const [users, setUsers] = useState<any[]>([]);
-
   const db = getFirestore();
   const usersGet = async () => {
     try {
@@ -15,7 +17,9 @@ export const LeftBar = () => {
       console.log("Ошииибка");
     }
   };
-
+  const onClickItem = (item:any) => {
+    setActiveUser(item)
+  }
   useEffect(() => {
     usersGet();
   }, []);
@@ -23,9 +27,9 @@ export const LeftBar = () => {
   console.log(users);
   return (
     <div>
-      <h3>Users re</h3>
+      <h4>Users recommendation</h4>
       {users.map((item) => (
-        <Button block>{item}</Button>
+        <Button onClick={() => onClickItem(item)} block>{item}</Button>
       ))}
     </div>
   );

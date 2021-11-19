@@ -12,7 +12,6 @@ export const UserTop = () => {
   const db = getFirestore();
   const showAnimeItems = async () => {
       try{
-          console.log(currentUser.email)
         const querySnapshot = await onSnapshot(collection(db, `/users/${currentUser?.email}/anime`), doc => {
             setItems([])
             doc.forEach((d:any) => {
@@ -52,7 +51,7 @@ export const UserTop = () => {
        imgSrc={item.imgSrc}
        title={item.title}
        synopsis={item.synopsis}
-       onClickDeleteItem={onClickDeleteItem}
+       onClickItem={onClickDeleteItem}
        />
        )}
         </Row>

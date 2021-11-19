@@ -8,6 +8,7 @@ type CartItemType = {
   synopsis: string;
   mal_id: number;
   onClickAddItem?: any;
+  icons?:any;
 };
 export const CartItem: FC<CartItemType> = ({
   imgSrc,
@@ -15,6 +16,7 @@ export const CartItem: FC<CartItemType> = ({
   synopsis,
   mal_id,
   onClickAddItem,
+  icons,
 }) => {
   const { Meta } = Card;
   const onClickAdd = () => {

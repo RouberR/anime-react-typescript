@@ -28,7 +28,7 @@ export const SearchAnime = () => {
     const db = getFirestore();
     const addItems = async(mal_id:number, title:string, synopsis:string, imgSrc:string) => {
         try {
-            const docRef = await setDoc(doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`), {
+            const docRef = await setDoc(doc(db, `/users/${currentUser.email}/anime`, `${mal_id}`), {
                 mal_id: mal_id,
                 title: title,
                 synopsis: synopsis,

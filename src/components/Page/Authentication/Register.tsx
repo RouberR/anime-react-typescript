@@ -16,10 +16,12 @@ export const Register = () => {
      async function onFinish(values: any){
         setLoading(true)
          try{
-             await signup(values.username, values.password)
+             await signup(values.email, values.password)
              console.log('Success:', values);
              console.log("Пользователь создан")
-             await setDoc(doc(db, "users", values.username), {});
+             await setDoc(doc(db, "users", values.email.toLowerCase()), {
+               username:values.username
+             });
              nabigate("/");
          } catch{
           setError(true)
@@ -38,16 +40,22 @@ export const Register = () => {
           closable          
         />}
 <Form
-      name="normal_login"
+      name="email"
       className="login-form"
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
       <Form.Item
-        name="username"
+        name="email"
         rules={[{ required: true, message: 'Please input your E-mail!' }]}
       >
         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="E-mail" />
+      </Form.Item>
+      <Form.Item
+        name="username"
+        rules={[{ required: true, message: 'Please input your name' }]}
+      >
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Name" />
       </Form.Item>
       <Form.Item
         name="password"

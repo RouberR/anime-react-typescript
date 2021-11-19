@@ -8,11 +8,12 @@ type CartItemType = {
     title:string
     synopsis:string
     mal_id:number
-    onClickDeleteItem?:any
+    onClickItem?:any
+    icons?:"delete" | "add"
 }
-export const CartItem:FC<CartItemType> = ({imgSrc, title, synopsis, mal_id, onClickDeleteItem}) => {
+export const CartItem:FC<CartItemType> = ({imgSrc, title, synopsis, mal_id, onClickItem, icons}) => {
     const onClickDelete = () => {
-        onClickDeleteItem(mal_id)
+        onClickItem(mal_id)
     }
     const { Meta } = Card;
     return (
@@ -27,7 +28,7 @@ export const CartItem:FC<CartItemType> = ({imgSrc, title, synopsis, mal_id, onCl
         }
       >
         <Meta title={title} description={synopsis} />
-        <DeleteOutlined onClick={onClickDelete} style={{ fontSize: '24px', color: 'red' }}/>
+        {(icons === 'delete' ) ? (<DeleteOutlined onClick={onClickDelete} style={{ fontSize: '24px', color: 'red' }}/>) : (<PlusCircleTwoTone onClick={onClickDelete} style={{ fontSize: "24px" }} />)}
       </Card>
     )
 }
