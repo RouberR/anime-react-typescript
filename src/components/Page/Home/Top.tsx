@@ -1,16 +1,15 @@
-import { collection, getFirestore, onSnapshot } from '@firebase/firestore';
+import { collection, doc, getFirestore, onSnapshot, updateDoc } from '@firebase/firestore';
 import React, { useState, useEffect, FC } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
+import { addItems } from '../../../API/AddItems';
 import { useAuth } from '../../../firebase';
-import { CartItem } from '../MyTop/CartItem/CartItem'
+import { Cards } from '../../CardAntd/Cards';
 import { LeftBar } from './LeftBar/LeftBar';
 type TopType = {
     activeUser:string
 }
 export const Top:FC<TopType> = ({activeUser}) => {
     const [items, setItems] = useState<any[]>([]);
-   console.log(activeUser)
-   console.log(activeUser)
     const currentUser:any = useAuth();
     const db = getFirestore();
     const showAnimeItems = async () => {
@@ -26,6 +25,28 @@ export const Top:FC<TopType> = ({activeUser}) => {
         }
        
   }
+
+const changeSynopsis = async () => {
+  const changeSynopsis = await updateDoc(doc(db, `/users/${activeUser}/anime`, "mal_id"), {
+    capital: true
+  });
+}
+
+const onClickUpdateSynopsis = () => {
+
+}
+
+const onClickAddItem = (mal_id:number,
+  title:string, 
+  synopsis:string,
+   imgSrc:string,
+    score:number, 
+    url:string, 
+    textArea:string) => {
+     addItems(mal_id, title, synopsis, imgSrc, score, url, textArea)
+
+}
+
   useEffect(() => {
     showAnimeItems()
   }, [activeUser])
@@ -36,13 +57,17 @@ export const Top:FC<TopType> = ({activeUser}) => {
             
         
         {items && items.map(item => (
-      <CartItem
+      <Cards
                key={item.mal_id}
                mal_id={item.mal_id}
                imgSrc={item.imgSrc}
                title={item.title}
                synopsis={item.synopsis}
+               score={item.score}
+               url={item.url}
+               onClickUpdateSynopsis={onClickUpdateSynopsis}
                icons='add'
+               onClickItem={onClickAddItem}
       />
         ))}
        

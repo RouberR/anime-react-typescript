@@ -1,12 +1,20 @@
+import { PlusCircleTwoTone, SearchOutlined } from "@ant-design/icons";
 import { Rate, Spin } from "antd";
+import { Button } from "antd/lib";
 import React, { FC } from "react";
 import { Card } from "react-bootstrap";
 type TopAnimeItemType = {
   items: any[];
   loading: boolean;
+  onClickAdd: any
 };
-export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading }) => {
+export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading, onClickAdd }) => {
   const skelet = [1, 2, 3, 4];
+
+  const onClickIcon = (mal_id: number, title:string, synopsis:string, imgSrc:string, score:number, url:string, textArea:string = "") => {
+    onClickAdd(mal_id, title, synopsis, imgSrc, score, url, textArea)
+  }
+
   return (
     <>
       {loading
@@ -25,6 +33,7 @@ export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading }) => {
           ))
         : items &&
           items.map((item) => (
+            
             <Card
               key={item.mal_id}
               border="info"
@@ -47,6 +56,13 @@ export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading }) => {
                   <Rate disabled count={10} defaultValue={item.score} /> Rating:{" "}
                   {item.score}
                 </Card.Text>
+                <PlusCircleTwoTone onClick={() => onClickIcon(item.mal_id,
+                   item.title,
+                    item.episodes,
+                     item.image_url,
+                      item.score,
+                      item.url)}  style={{ fontSize: "24px" }} />
+                <Button href={item.url} target="_blank" type="primary" icon={<SearchOutlined/>}>Search</Button>
               </Card.Body>
             </Card>
           ))}
