@@ -1,4 +1,3 @@
-
 import React, { FC } from "react";
 import { Card, Rate } from "antd";
 import { DeleteOutlined, PlusCircleTwoTone } from "@ant-design/icons";
@@ -10,11 +9,11 @@ type CardsType = {
     title:string
     synopsis:string
     mal_id:number
-    score?:number
     onClickItem?:any
+    score?:number
     url?:string
-    onClickUpdateSynopsis?: any
     icons?:"delete" | "add"
+    onClickUpdateSynopsis?: (mal_id: number, textArea: string) => void
 }
 export const Cards:FC<CardsType> = ({imgSrc, title, synopsis, mal_id, score, onClickItem, icons, url, onClickUpdateSynopsis}) => {
   const [textArea, setTextArea] = React.useState<string>(synopsis)
@@ -26,7 +25,7 @@ export const Cards:FC<CardsType> = ({imgSrc, title, synopsis, mal_id, score, onC
     }
 
     const onClickChangeText = () => {
-      onClickUpdateSynopsis(mal_id)
+      onClickUpdateSynopsis!(mal_id, textArea)
     }
     const onChange = (e:any) => {
       setTextArea(e.target.value);
@@ -44,13 +43,15 @@ export const Cards:FC<CardsType> = ({imgSrc, title, synopsis, mal_id, score, onC
           <img
             alt="example"
             src={imgSrc}
+            height={400}
+            width={275}
           />
         }
       >
         {/* description={synopsis} */}
         <Meta title={title}  />
         <TextArea bordered={false} allowClear rows={8} showCount maxLength={200} value={textArea} onChange={(e) => onChange(e)} />
-
+        {onClickUpdateSynopsis && <Button onClick={onClickChangeText} size='large' type="text" danger>Redit</Button>}
                   <Rate disabled count={5} defaultValue={score!/2} /> 
                   <p>Rating:{score}</p>
                   

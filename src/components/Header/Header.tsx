@@ -11,9 +11,9 @@ export const HeaderMenu = () => {
         <Navbar.Brand as = {NavLink} to="/">Anime TOP</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link as = {NavLink} to="/">Home</Nav.Link>
-          <Nav.Link as = {NavLink} to="/Search">Search Anime</Nav.Link>
-          <Nav.Link as = {NavLink} to="/MyTop">My Top</Nav.Link>
-          <Nav.Link as = {NavLink} to="/TopAnime">Top Anime</Nav.Link>
+          <Nav.Link as = {NavLink} to="/search">Search Anime</Nav.Link>
+          <Nav.Link as = {NavLink} to="/my-top">My Top</Nav.Link>
+          <Nav.Link as = {NavLink} to="/top-anime">Top Anime</Nav.Link>
           {/* <Nav.Link as = {NavLink} to="/Login">Login</Nav.Link> */}
           
         </Nav>

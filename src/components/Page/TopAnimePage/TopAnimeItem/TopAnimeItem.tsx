@@ -3,13 +3,13 @@ import { Rate, Spin } from "antd";
 import { Button } from "antd/lib";
 import React, { FC } from "react";
 import { Card } from "react-bootstrap";
+import { Skeleton } from "../../../UIAntd/Skeleton";
 type TopAnimeItemType = {
   items: any[];
   loading: boolean;
   onClickAdd: any
 };
 export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading, onClickAdd }) => {
-  const skelet = [1, 2, 3, 4];
 
   const onClickIcon = (mal_id: number, title:string, synopsis:string, imgSrc:string, score:number, url:string, textArea:string = "") => {
     onClickAdd(mal_id, title, synopsis, imgSrc, score, url, textArea)
@@ -18,19 +18,7 @@ export const TopAnimeItem: FC<TopAnimeItemType> = ({ items, loading, onClickAdd 
   return (
     <>
       {loading
-        ? skelet.map((item) => (
-            <Card
-              key={item}
-              border="info"
-              className="mb-2"
-              style={{ width: "20rem" }}
-            >
-              <Spin className="example" size={"large"} spinning={loading} />
-              <Card.Body>
-                <Card.Title>Загрузка данных</Card.Title>
-              </Card.Body>
-            </Card>
-          ))
+        ? <Skeleton items={4}/>
         : items &&
           items.map((item) => (
             

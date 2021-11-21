@@ -1,61 +1,93 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "antd";
-import { collection, getDocs, query, onSnapshot } from "firebase/firestore";
+import { Button, Result } from "antd";
+import { collection, getDocs, query, onSnapshot, updateDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
-import { useAuth } from '../../../firebase'
+import { useAuth } from "../../../firebase";
 import { Container, Row } from "react-bootstrap";
 import { doc, deleteDoc } from "firebase/firestore";
-import { Cards } from "../../CardAntd/Cards";
+import { Cards } from "../../UIAntd/Cards";
+import { Skeleton} from "../../UIAntd/Skeleton";
+import { useNavigate } from "react-router-dom";
+import { NullItem } from "../../UIAntd/NullItem";
+
 export const UserTop = () => {
   const [items, setItems] = useState<any[]>([]);
-  const currentUser:any = useAuth();
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const currentUser: any = useAuth();
   const db = getFirestore();
   const showAnimeItems = async () => {
-      try{
-        const querySnapshot = await onSnapshot(collection(db, `/users/${currentUser?.email}/anime`), doc => {
-            setItems([])
-            doc.forEach((d:any) => {
-                setItems(prev => [...prev, d.data()])
-            })
-        });
-      }catch{
-
-      }
-}
-    const onClickDeleteItem = async (mal_id:number) => {
-      try{
-        const deleteDocs = await deleteDoc(doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`));
-        console.log("Удаление удачное")
-      }catch{
-        console.log("Неудачное удаление")
-      }
+    setLoading(true);
+    try {
+      const querySnapshot = await onSnapshot(
+        collection(db, `/users/${currentUser?.email}/anime`),
+        (doc) => {
+          setItems([]);
+          doc.forEach((d: any) => {
+            setItems((prev) => [...prev, d.data()]);
+          });
+          setLoading(false);
+        }
+      );
+    } catch {}
+  };
+  const onClickDeleteItem = async (mal_id: number) => {
+    try {
+      const deleteDocs = await deleteDoc(
+        doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`)
+      );
+      console.log("Удаление удачное");
+    } catch {
+      console.log("Неудачное удаление");
     }
+  };
 
+  const onClickButton = () => {
+    navigate("/search");
+  };
 
+  useEffect(() => {
+    showAnimeItems();
+    console.log(items);
+    console.log(items);
+  }, [currentUser]);
 
-  useEffect(()=>{
-    showAnimeItems()
-    console.log(items)
-    console.log(items)
-  },[currentUser])
-
+  const onClickUpdateSynopsis = async (mal_id:number, textArea:string) => {
+   try{
+    console.log("АААААААААААААААААААААААААААА")
+    await updateDoc(doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`), {
+      synopsis: textArea
+    });
+   }catch{
+    console.log("ООООШИИИИИБКААА")
+   }
+  }
   return (
     <Container>
-         <Row xs={1} md={3} className="g-2">
-    {items && items.map(item => 
-      <Cards
-       key={item.mal_id}
-       mal_id={item.mal_id}
-       imgSrc={item.imgSrc}
-       title={item.title}
-       synopsis={item.synopsis}
-       onClickItem={onClickDeleteItem}
-       score={item.score}
-       url={item.url}
-       icons="delete"
-       />
-       )}
-        </Row>
+      <Row xs={1} md={3} className="g-2">
+        {loading ? (
+          <Skeleton items={4} />
+        ) : items[0] ? (
+          items.map((item) => (
+            <Cards
+              key={item.mal_id}
+              mal_id={item.mal_id}
+              imgSrc={item.imgSrc}
+              title={item.title}
+              synopsis={item.synopsis}
+              onClickItem={onClickDeleteItem}
+              score={item.score}
+              url={item.url}
+              onClickUpdateSynopsis={onClickUpdateSynopsis}
+              icons="delete"
+            />
+          ))
+        ) : (
+          <>
+            <NullItem onClickButton={onClickButton}/>
+          </>
+        )}
+      </Row>
     </Container>
   );
 };

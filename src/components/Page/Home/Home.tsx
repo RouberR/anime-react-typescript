@@ -4,7 +4,7 @@ import { CarouselBody } from "./Carousel/Carousel";
 import { LeftBar } from "./LeftBar/LeftBar";
 import { Top } from "./Top";
 export const Home = () => {
-  const [activeUser, setActiveUser] = useState<string>("rouber@bk.ru");
+  const [activeUser, setActiveUser] = useState<string>("Evgen@bk.ru");
   
   return (
     <>

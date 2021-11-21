@@ -12,6 +12,7 @@ export const Account = () => {
     const content = (
         <div>
           <a onClick={handleLogout}>Log out</a>
+        
         </div>
       );
       async function handleLogout() {
@@ -34,10 +35,12 @@ export const Account = () => {
       </Popover>) 
       :
        (
-        <Link to="/Login">
+        <Link to="/login">
         <Button  type="primary" danger>
             Login/Register
         </Button></Link>
+
+        
      )}
 
       </>

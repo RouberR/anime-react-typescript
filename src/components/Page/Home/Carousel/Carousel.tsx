@@ -1,47 +1,66 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Carousel } from "react-bootstrap";
-
+import { Row, Col } from "antd";
 export const CarouselBody = () => {
+  const [animeList, setAnimeList] = useState<any[]>([]);
+  const getSearch = async () => {
+    const dataNow = new Date().toISOString().split("T")[0];
+    const dataPast = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0];
+    const temp: any = await axios.get(
+      `https://api.jikan.moe/v3/search/anime?q=&order_by=members&start_date=${dataPast}&end_date=${dataNow}&sort=desc&page=1&limit=10`
+    );
+    setAnimeList(temp.data.results);
+    console.log(temp.data.results);
+  };
+
+  useEffect(() => {
+    getSearch();
+    console.log(animeList);
+    console.log(animeList);
+
+  }, []);
+
   return (
-    <Carousel>
-      <Carousel.Item interval={1000}>
-        <img
-          className="d-block w-100"
-          src="https://pm1.narvii.com/6573/5ff1f8787cbd2381576336124f09a4969a6093b4_hq.jpg"
-          alt="First slide"
-          height="350"
-        />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={500}>
-        <img
-          className="d-block w-100"
-          src="https://99px.ru/sstorage/53/2020/11/tmb_317668_680625.jpg"
-          alt="Second slide"
-          height="350"
-        />
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="https://avatanplus.com/files/resources/original/5895dcd67f5d715a0966a5fa.jpg"
-          alt="Third slide"
-          height="350"
-        />
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
+    <Carousel className={'carousel'}>
+      {animeList &&
+        animeList.map(item => (
+          <Carousel.Item interval={2500}>
+            <Row>
+              <Col span={6}>
+                <a target="_blank" href={item.url} >
+                <img
+                  className="d-block w-100"
+                  src={item.image_url}
+                  alt="AnimeIMG"
+                  height="300"
+                  width="1"
+                />
+                </a>
+              </Col>
+              <Col span={7}>
+               
+                  <p>{item.title}</p>
+                  <p>Date start {item.start_date.split("T")[0]}</p>
+                  <p>Rating: {item.score}</p>
+                  <p>Episodes: {item.episodes}</p>
+                  {item.rated && <p>Rated: {item.rated}</p>}
+                  <p>{item.type}</p>
+
+             
+              </Col>
+              <Col span={9}>
+              
+                  <h4>
+                    {item.synopsis}
+                  </h4>
+            
+              </Col>
+            </Row>
+          </Carousel.Item>
+        ))}
     </Carousel>
   );
 };

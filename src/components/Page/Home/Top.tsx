@@ -3,22 +3,27 @@ import React, { useState, useEffect, FC } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { addItems } from '../../../API/AddItems';
 import { useAuth } from '../../../firebase';
-import { Cards } from '../../CardAntd/Cards';
+import { Cards } from '../../UIAntd/Cards';
+import { NullItem } from '../../UIAntd/NullItem';
+import { Skeleton } from '../../UIAntd/Skeleton';
 import { LeftBar } from './LeftBar/LeftBar';
 type TopType = {
     activeUser:string
 }
 export const Top:FC<TopType> = ({activeUser}) => {
     const [items, setItems] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
     const currentUser:any = useAuth();
     const db = getFirestore();
     const showAnimeItems = async () => {
-        try{
+      setLoading(true)
+      try{
           const querySnapshot = await onSnapshot(collection(db, `/users/${activeUser}/anime`), doc => {
               setItems([])
               doc.forEach((d:any) => {
                   setItems(prev => [...prev, d.data()])
               })
+              setLoading(false)
           });
         }catch{
   
@@ -32,9 +37,7 @@ const changeSynopsis = async () => {
   });
 }
 
-const onClickUpdateSynopsis = () => {
 
-}
 
 const onClickAddItem = (mal_id:number,
   title:string, 
@@ -55,8 +58,7 @@ const onClickAddItem = (mal_id:number,
         <Row>
  
             
-        
-        {items && items.map(item => (
+        {loading ? (<Skeleton items={4}/>) : (items[0] ? (items.map(item => (
       <Cards
                key={item.mal_id}
                mal_id={item.mal_id}
@@ -65,11 +67,11 @@ const onClickAddItem = (mal_id:number,
                synopsis={item.synopsis}
                score={item.score}
                url={item.url}
-               onClickUpdateSynopsis={onClickUpdateSynopsis}
                icons='add'
                onClickItem={onClickAddItem}
       />
-        ))}
+        ))) : (<NullItem user={activeUser}/>) )}
+
        
   
         </Row>

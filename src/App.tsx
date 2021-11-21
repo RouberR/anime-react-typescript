@@ -21,11 +21,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/TopAnime" element={<TopAnime />} />
-        <Route path="/MyTop" element={<UserTop/>} />
-        <Route path="/Search" element={<SearchAnime/>} />
-        <Route path="/Login" element={<Cart/>} />
-        <Route path="/Register" element={<Register/>} />
+        <Route path="/top-anime" element={<TopAnime />} />
+        <Route path="/my-top" element={<UserTop/>} />
+        <Route path="/search" element={<SearchAnime/>} />
+        <Route path="/login" element={<Cart/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
     </>
   );
