@@ -1,40 +1,40 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Container } from "react-bootstrap";
 import { Form, Input, Button, Checkbox } from "antd";
-import {logout, useAuth, login} from '../../../firebase';
+import { useAuth, login } from "../../../Firebase/firebase";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useNavigate } from 'react-router-dom';
-import { Alert } from 'antd';
+import { useNavigate } from "react-router-dom";
+import { Alert } from "antd";
 
 export const Login = () => {
-    const currentUser:any = useAuth();
-    const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
-    const nabigate = useNavigate()
-    async function onFinish(values: any){
-        setLoading(true)
-         try{
-             await login(values.username, values.password)
-             console.log('Success:', values);
-             nabigate("/");
-         } catch(e){
-          setError(true)
-         }
-         setLoading(false)
-      };
-
-
+  const currentUser: any = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const nabigate = useNavigate();
+  async function onFinish(values: any) {
+    setLoading(true);
+    try {
+      await login(values.username, values.password);
+      console.log("Success:", values);
+      nabigate("/");
+    } catch (e) {
+      setError(true);
+    }
+    setLoading(false);
+  }
 
   return (
     <Container>
-     {error && <Alert
+      {error && (
+        <Alert
           message="Error"
           description="Please enter a valid email address. Please enter a valid password"
           type="error"
           showIcon
-          closable          
-        />}
-        <h1>{currentUser?.email}</h1>
+          closable
+        />
+      )}
+      <h1>{currentUser?.email}</h1>
       <Form
         name="normal_E-mail"
         className="login-form"
@@ -75,7 +75,7 @@ export const Login = () => {
           >
             Log in
           </Button>
-          
+
           {/* Or <Link to="/register">register now!</Link> */}
         </Form.Item>
       </Form>

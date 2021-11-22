@@ -1,5 +1,5 @@
 import { Pagination } from "antd";
-import React, { FC } from "react";
+import { FC } from "react";
 
 type PaginationAnimeType = {
   onClickPagintor: any;
@@ -12,12 +12,12 @@ export const PaginationAnime: FC<PaginationAnimeType> = ({
   };
 
   return (
-      <Pagination
-        defaultCurrent={1}
-        defaultPageSize={1}
-        total={50}
-        onChange={(current) => onClickActiv(current)}
-        showQuickJumper
-      />
+    <Pagination
+      defaultCurrent={1}
+      defaultPageSize={1}
+      total={50}
+      onChange={(current) => onClickActiv(current)}
+      showQuickJumper
+    />
   );
 };

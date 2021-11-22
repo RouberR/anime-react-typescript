@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Button, Result } from "antd";
-import { collection, getDocs, query, onSnapshot, updateDoc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import {
+  collection,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
-import { useAuth } from "../../../firebase";
+import { useAuth } from "../../../Firebase/firebase";
 import { Container, Row } from "react-bootstrap";
 import { doc, deleteDoc } from "firebase/firestore";
 import { Cards } from "../../UIAntd/Cards";
-import { Skeleton} from "../../UIAntd/Skeleton";
+import { Skeleton } from "../../UIAntd/Skeleton";
 import { useNavigate } from "react-router-dom";
 import { NullItem } from "../../UIAntd/NullItem";
 
@@ -48,20 +51,20 @@ export const UserTop = () => {
 
   useEffect(() => {
     showAnimeItems();
-    console.log(items);
+    console.log(currentUser);
     console.log(items);
   }, [currentUser]);
 
-  const onClickUpdateSynopsis = async (mal_id:number, textArea:string) => {
-   try{
-    console.log("АААААААААААААААААААААААААААА")
-    await updateDoc(doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`), {
-      synopsis: textArea
-    });
-   }catch{
-    console.log("ООООШИИИИИБКААА")
-   }
-  }
+  const onClickUpdateSynopsis = async (mal_id: number, textArea: string) => {
+    try {
+      await updateDoc(
+        doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`),
+        {
+          synopsis: textArea,
+        }
+      );
+    } catch {}
+  };
   return (
     <Container>
       <Row xs={1} md={3} className="g-2">
@@ -84,7 +87,7 @@ export const UserTop = () => {
           ))
         ) : (
           <>
-            <NullItem onClickButton={onClickButton}/>
+            <NullItem onClickButton={onClickButton} currentUser={currentUser} />
           </>
         )}
       </Row>

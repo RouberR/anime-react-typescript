@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Carousel } from "react-bootstrap";
 import { Row, Col } from "antd";
-import { Button } from "antd/lib";
 export const CarouselBody = () => {
   const [animeList, setAnimeList] = useState<any[]>([]);
   const getSearch = async () => {
@@ -24,39 +23,36 @@ export const CarouselBody = () => {
   }, []);
 
   return (
-    <div className={"buttonCard"}>
-      <Carousel fade className={"carousel"}>
-        {animeList &&
-          animeList.map((item) => (
-            <Carousel.Item>
-              <div className={"textCarusel"}>
+    <Carousel className={"carousel"}>
+      {animeList &&
+        animeList.map((item) => (
+          <Carousel.Item interval={2500}>
+            <Row>
+              <Col span={6}>
+                <a target="_blank" href={item.url}>
+                  <img
+                    className="d-block w-100"
+                    src={item.image_url}
+                    alt="AnimeIMG"
+                    height="300"
+                    width="1"
+                  />
+                </a>
+              </Col>
+              <Col span={7}>
                 <p>{item.title}</p>
                 <p>Date start {item.start_date.split("T")[0]}</p>
                 <p>Rating: {item.score}</p>
                 <p>Episodes: {item.episodes}</p>
                 {item.rated && <p>Rated: {item.rated}</p>}
-
                 <p>{item.type}</p>
-                <p>{item.synopsis}</p>
-                <Button
-                  target="_blank"
-                  href={item.url}
-                  size="small"
-                  type="dashed"
-                >
-                  Search
-                </Button>
-              </div>
-              <img
-                className="caruselIMG d-block "
-                src={item.image_url}
-                alt="AnimeIMG"
-                height="400"
-                width="400"
-              />
-            </Carousel.Item>
-          ))}
-      </Carousel>
-    </div>
+              </Col>
+              <Col span={9}>
+                <h4>{item.synopsis}</h4>
+              </Col>
+            </Row>
+          </Carousel.Item>
+        ))}
+    </Carousel>
   );
 };
