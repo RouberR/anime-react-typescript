@@ -1,7 +1,7 @@
 import { PlusCircleTwoTone, SearchOutlined } from "@ant-design/icons";
-import { Rate, Spin } from "antd";
+import { Rate } from "antd";
 import { Button } from "antd/lib";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Card } from "react-bootstrap";
 import { Skeleton } from "../../../UIAntd/Skeleton";
 type TopAnimeItemType = {

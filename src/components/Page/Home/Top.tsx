@@ -23,27 +23,23 @@ export const Top: FC<TopType> = ({ activeUser }) => {
   const showAnimeItems = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await onSnapshot(
-        collection(db, `/users/${activeUser}/anime`),
-        (doc) => {
-          setItems([]);
-          doc.forEach((d: any) => {
-            setItems((prev) => [...prev, d.data()]);
-          });
-          setLoading(false);
-        }
-      );
-    } catch {}
+      await onSnapshot(collection(db, `/users/${activeUser}/anime`), (doc) => {
+        setItems([]);
+        doc.forEach((d: any) => {
+          setItems((prev) => [...prev, d.data()]);
+        });
+        setLoading(false);
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
 
-  const changeSynopsis = async () => {
-    const changeSynopsis = await updateDoc(
-      doc(db, `/users/${activeUser}/anime`, "mal_id"),
-      {
-        capital: true,
-      }
-    );
-  };
+  // const changeSynopsis = async () => {
+  //   await updateDoc(doc(db, `/users/${activeUser}/anime`, "mal_id"), {
+  //     capital: true,
+  //   });
+  // };
 
   const onClickAddItem = (
     mal_id: number,
@@ -62,7 +58,6 @@ export const Top: FC<TopType> = ({ activeUser }) => {
   useEffect(() => {
     showAnimeItems();
   }, [activeUser]);
-  console.log(items);
   return (
     <Row>
       {loading ? (

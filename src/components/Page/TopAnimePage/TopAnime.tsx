@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { getFirestore } from "@firebase/firestore";
 import { Container, Row } from "react-bootstrap";
 import { addItems } from "../../../Firebase/addItems";
 import { useAuth } from "../../../Firebase/firebase";
@@ -8,11 +7,10 @@ import { PaginationAnime } from "./PaginationAnime/PaginationAnime";
 import { TopAnimeItem } from "./TopAnimeItem/TopAnimeItem";
 
 export const TopAnime = () => {
-  const [topAnime, setTopAnime] = useState<any[]>([]);
+  const [topAnime, setTopAnime] = useState([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [loading, setLoading] = useState(true);
-  const currentUser: any = useAuth();
-  const db = getFirestore();
+  const currentUser: string[] | undefined = useAuth();
   const getTopAnime = async () => {
     setLoading(true);
     const temp: any = await axios.get(
@@ -24,7 +22,6 @@ export const TopAnime = () => {
 
   React.useEffect(() => {
     getTopAnime();
-    console.log(topAnime);
   }, [pageNumber]);
   const onClickPagintor = (id: number) => {
     setPageNumber(id);

@@ -22,7 +22,7 @@ export const UserTop = () => {
   const showAnimeItems = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await onSnapshot(
+      await onSnapshot(
         collection(db, `/users/${currentUser?.email}/anime`),
         (doc) => {
           setItems([]);
@@ -32,11 +32,13 @@ export const UserTop = () => {
           setLoading(false);
         }
       );
-    } catch {}
+    } catch(e) {
+      alert(e)
+    }
   };
   const onClickDeleteItem = async (mal_id: number) => {
     try {
-      const deleteDocs = await deleteDoc(
+       await deleteDoc(
         doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`)
       );
       console.log("Удаление удачное");
@@ -51,8 +53,6 @@ export const UserTop = () => {
 
   useEffect(() => {
     showAnimeItems();
-    console.log(currentUser);
-    console.log(items);
   }, [currentUser]);
 
   const onClickUpdateSynopsis = async (mal_id: number, textArea: string) => {

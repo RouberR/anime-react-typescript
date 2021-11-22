@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { InputSearch } from "./InputSearchAnime/InputSearch";
-import { getAuth } from "@firebase/auth";
 import { useAuth } from "../../../Firebase/firebase";
 import { Cards } from "../../UIAntd/Cards";
 import { addItems } from "../../../Firebase/addItems";
@@ -13,7 +12,6 @@ export const SearchAnime = () => {
   const [titleAnime, setTitleAnime] = useState<string>("Naruto");
   const [loading, setLoading] = useState(true);
 
-  const auth = getAuth();
   const currentUser: any = useAuth();
   const getSearch = async () => {
     setLoading(true);
@@ -21,14 +19,11 @@ export const SearchAnime = () => {
       `https://api.jikan.moe/v3/search/anime?q=${titleAnime}&order_by=title&sort=asc&limit=30`
     );
     setAnimeList(temp.data.results);
-    console.log(temp.data.results);
     setLoading(false);
   };
 
   React.useEffect(() => {
     getSearch();
-    console.log(titleAnime);
-    console.log(auth);
   }, [titleAnime]);
 
   const onClickAddItem = (
