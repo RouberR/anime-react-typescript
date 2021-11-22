@@ -94,9 +94,7 @@ code {
   font-family: "Press Start 2P", cursive, "Roboto", sans-serif;
 }
 
-.search {
-  margin-left: 20px;
-}
+
 
 .row {
   --bs-gutter-y: 0;
