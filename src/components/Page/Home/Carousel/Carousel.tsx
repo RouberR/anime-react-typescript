@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Carousel } from "react-bootstrap";
-import { Row, Col } from "antd";
 import { Button } from "antd/lib";
 export const CarouselBody = () => {
   const [animeList, setAnimeList] = useState<any[]>([]);
@@ -14,13 +13,11 @@ export const CarouselBody = () => {
       `https://api.jikan.moe/v3/search/anime?q=&order_by=members&start_date=${dataPast}&end_date=${dataNow}&sort=desc&page=1&limit=10`
     );
     setAnimeList(temp.data.results);
-    console.log(temp.data.results);
+
   };
 
   useEffect(() => {
     getSearch();
-    console.log(animeList);
-    console.log(animeList);
   }, []);
 
   return (
@@ -28,7 +25,7 @@ export const CarouselBody = () => {
       <Carousel fade className={"carousel"}>
         {animeList &&
           animeList.map((item) => (
-            <Carousel.Item>
+            <Carousel.Item  key={item.mal_id}>    
               <div className={"textCarusel"}>
                 <p>{item.title}</p>
                 <p>Date start {item.start_date.split("T")[0]}</p>

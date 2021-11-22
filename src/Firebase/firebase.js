@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -22,6 +22,7 @@ const firebaseConfig = {
   appId: "1:643567091345:web:4b4bcbadf2880f45af4930",
   measurementId: "G-P570PGGZCV",
 };
+// eslint-disable-next-line no-unused-vars
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
@@ -42,7 +43,6 @@ export function useAuth() {
     const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user));
     return unsub;
   }, []);
-  console.log(currentUser);
   return currentUser;
 }
 

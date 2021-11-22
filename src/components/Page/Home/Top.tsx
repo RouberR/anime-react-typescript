@@ -1,9 +1,7 @@
 import {
   collection,
-  doc,
   getFirestore,
   onSnapshot,
-  updateDoc,
 } from "@firebase/firestore";
 import { useState, useEffect, FC } from "react";
 import { Row } from "react-bootstrap";
@@ -19,27 +17,7 @@ export const Top: FC<TopType> = ({ activeUser }) => {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const currentUser: any = useAuth();
-  const db = getFirestore();
-  const showAnimeItems = async () => {
-    setLoading(true);
-    try {
-      await onSnapshot(collection(db, `/users/${activeUser}/anime`), (doc) => {
-        setItems([]);
-        doc.forEach((d: any) => {
-          setItems((prev) => [...prev, d.data()]);
-        });
-        setLoading(false);
-      });
-    } catch (e) {
-      alert(e);
-    }
-  };
 
-  // const changeSynopsis = async () => {
-  //   await updateDoc(doc(db, `/users/${activeUser}/anime`, "mal_id"), {
-  //     capital: true,
-  //   });
-  // };
 
   const onClickAddItem = (
     mal_id: number,
@@ -55,7 +33,23 @@ export const Top: FC<TopType> = ({ activeUser }) => {
       : alert("Please login to your account for add this anime in your list");
   };
 
+
   useEffect(() => {
+    const showAnimeItems = async () => {
+      const db = getFirestore();
+      setLoading(true);
+      try {
+        await onSnapshot(collection(db, `/users/${activeUser}/anime`), (doc) => {
+          setItems([]);
+          doc.forEach((d: any) => {
+            setItems((prev) => [...prev, d.data()]);
+          });
+          setLoading(false);
+        });
+      } catch (e) {
+        alert(e);
+      }
+    };
     showAnimeItems();
   }, [activeUser]);
   return (

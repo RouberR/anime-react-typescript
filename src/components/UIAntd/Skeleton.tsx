@@ -5,12 +5,11 @@ type SkeletonType = {
 };
 export const Skeleton: FC<SkeletonType> = ({ items }) => {
   const skelet = Array.from(Array(items).keys());
-  console.log(skelet);
 
   return (
     <>
       {skelet.map((item) => (
-        <Card style={{ width: 300 }}>
+        <Card key={item} style={{ width: 300 }}>
           <p>
             <Spin /> Loading...
           </p>

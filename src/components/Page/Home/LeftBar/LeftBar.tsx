@@ -8,30 +8,31 @@ type LeftBarType = {
 export const LeftBar: FC<LeftBarType> = ({ setActiveUser }) => {
   const [users, setUsers] = useState<any[]>([]);
   const db = getFirestore();
-  const usersGet = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      setUsers(querySnapshot.docs.map((i) => i.id));
-    } catch {
-      console.log("Ошииибка");
-    }
-  };
+
   const onClickItem = (item: any) => {
     setActiveUser(item);
   };
   useEffect(() => {
+    const usersGet = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        setUsers(querySnapshot.docs.map((i) => i.id));
+      } catch {
+        console.log("Ошииибка");
+      }
+    };
     usersGet();
-  }, []);
+  }, [db]);
 
-  console.log(users);
+
   return (
     <div>
       <h4>Users recommendation</h4>
-      {users.map((item) => (
-        <Button onClick={() => onClickItem(item)} block>
+      {users.map(item =>  
+        <Button key={item} onClick={() => onClickItem(item)} block>
           {item}
         </Button>
-      ))}
+      )}
     </div>
   );
 };

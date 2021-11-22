@@ -1,24 +1,19 @@
-import React, { useState } from "react";
-import { GoogleAuthProvider } from "firebase/auth";
+import { useState } from "react";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
-import { Container, Row } from "react-bootstrap";
-import { signup, useAuth } from "../../../Firebase/firebase";
+import { Container } from "react-bootstrap";
+import { signup } from "../../../Firebase/firebase";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
-const provider = new GoogleAuthProvider();
 export const Register = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const currentUser: any = useAuth();
   const nabigate = useNavigate();
   const db = getFirestore();
   async function onFinish(values: any) {
     setLoading(true);
     try {
       await signup(values.email, values.password);
-      console.log("Success:", values);
-      console.log("Пользователь создан");
       await setDoc(doc(db, "users", values.email.toLowerCase()), {
         username: values.username,
       });

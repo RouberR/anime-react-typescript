@@ -13,16 +13,16 @@ export const SearchAnime = () => {
   const [loading, setLoading] = useState(true);
 
   const currentUser: any = useAuth();
-  const getSearch = async () => {
-    setLoading(true);
-    const temp = await axios.get(
-      `https://api.jikan.moe/v3/search/anime?q=${titleAnime}&order_by=title&sort=asc&limit=30`
-    );
-    setAnimeList(temp.data.results);
-    setLoading(false);
-  };
 
   React.useEffect(() => {
+    const getSearch = async () => {
+      setLoading(true);
+      const temp = await axios.get(
+        `https://api.jikan.moe/v3/search/anime?q=${titleAnime}&order_by=title&sort=asc&limit=30`
+      );
+      setAnimeList(temp.data.results);
+      setLoading(false);
+    };  
     getSearch();
   }, [titleAnime]);
 

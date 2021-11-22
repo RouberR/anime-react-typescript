@@ -10,15 +10,13 @@ export const Account = () => {
     setVisible(!visible);
   };
   const content = (
-    <div>
-      <a onClick={handleLogout}>Log out</a>
-    </div>
+      <p onClick={handleLogout}>Log out</p>
   );
   async function handleLogout() {
     try {
       await logout();
-    } catch {
-      alert("Ошибочка");
+    } catch (e) {
+      alert(e);
     }
   }
   return (

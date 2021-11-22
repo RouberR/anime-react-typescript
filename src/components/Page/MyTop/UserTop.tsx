@@ -19,31 +19,14 @@ export const UserTop = () => {
   const navigate = useNavigate();
   const currentUser: any = useAuth();
   const db = getFirestore();
-  const showAnimeItems = async () => {
-    setLoading(true);
-    try {
-      await onSnapshot(
-        collection(db, `/users/${currentUser?.email}/anime`),
-        (doc) => {
-          setItems([]);
-          doc.forEach((d: any) => {
-            setItems((prev) => [...prev, d.data()]);
-          });
-          setLoading(false);
-        }
-      );
-    } catch(e) {
-      alert(e)
-    }
-  };
+
   const onClickDeleteItem = async (mal_id: number) => {
     try {
        await deleteDoc(
         doc(db, `/users/${currentUser?.email}/anime`, `${mal_id}`)
       );
-      console.log("Удаление удачное");
-    } catch {
-      console.log("Неудачное удаление");
+    } catch (e){
+     alert(e);
     }
   };
 
@@ -52,8 +35,25 @@ export const UserTop = () => {
   };
 
   useEffect(() => {
+    const showAnimeItems = async () => {
+      setLoading(true);
+      try {
+        await onSnapshot(
+          collection(db, `/users/${currentUser?.email}/anime`),
+          (doc) => {
+            setItems([]);
+            doc.forEach((d: any) => {
+              setItems((prev) => [...prev, d.data()]);
+            });
+            setLoading(false);
+          }
+        );
+      } catch(e) {
+        alert(e)
+      }
+    };
     showAnimeItems();
-  }, [currentUser]);
+  }, [currentUser, db]);
 
   const onClickUpdateSynopsis = async (mal_id: number, textArea: string) => {
     try {

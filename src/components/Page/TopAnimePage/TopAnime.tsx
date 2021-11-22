@@ -11,16 +11,17 @@ export const TopAnime = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [loading, setLoading] = useState(true);
   const currentUser: string[] | undefined = useAuth();
-  const getTopAnime = async () => {
-    setLoading(true);
-    const temp: any = await axios.get(
-      `https://api.jikan.moe/v3/top/anime/${pageNumber}/bypopularity`
-    );
-    setTopAnime(temp.data.top);
-    setLoading(false);
-  };
+
 
   React.useEffect(() => {
+    const getTopAnime = async () => {
+      setLoading(true);
+      const temp: any = await axios.get(
+        `https://api.jikan.moe/v3/top/anime/${pageNumber}/bypopularity`
+      );
+      setTopAnime(temp.data.top);
+      setLoading(false);
+    };
     getTopAnime();
   }, [pageNumber]);
   const onClickPagintor = (id: number) => {

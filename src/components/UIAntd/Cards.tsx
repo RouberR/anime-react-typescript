@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Card, Rate } from "antd";
-import { DeleteOutlined, PlusCircleTwoTone } from "@ant-design/icons";
+import { CheckCircleOutlined, DeleteOutlined, PlusCircleTwoTone } from "@ant-design/icons";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { Input } from "antd";
@@ -27,10 +27,12 @@ export const Cards: FC<CardsType> = ({
   onClickUpdateSynopsis,
 }) => {
   const [textArea, setTextArea] = React.useState<string>(synopsis);
+  const [addButton, setAddButton] = React.useState<boolean>(true);
   const onClickIconDelete = () => {
     onClickItem(mal_id);
   };
   const onClickIconAdd = () => {
+    setAddButton(false)
     onClickItem(mal_id, title, synopsis, imgSrc, score, url, textArea);
   };
 
@@ -75,10 +77,11 @@ export const Cards: FC<CardsType> = ({
             style={{ fontSize: "24px", color: "red" }}
           />
         ) : (
-          <PlusCircleTwoTone
+          addButton ? (<PlusCircleTwoTone
             onClick={onClickIconAdd}
             style={{ fontSize: "24px" }}
           />
+         ) : (<CheckCircleOutlined style={{ fontSize: "24px", color: "green"}}/>) 
         )}
         <Button
           href={url}
