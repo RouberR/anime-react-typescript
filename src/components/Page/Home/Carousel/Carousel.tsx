@@ -11,7 +11,7 @@ export const CarouselBody = () => {
       .split("T")[0];
     const temp: any = await axios.get(
       `https://api.jikan.moe/v3/search/anime?q=&order_by=members&start_date=${dataPast}&end_date=${dataNow}&sort=desc&page=1&limit=10`
-    );
+    ) };
     setAnimeList(temp.data.results);
 
   };
@@ -28,7 +28,7 @@ export const CarouselBody = () => {
             <Carousel.Item  key={item.mal_id}>    
               <div className={"textCarusel"}>
                 <p>{item.title}</p>
-                <p>Date start {item.start_date.split("T")[0]}</p>
+                <p>Date start {item.start_date && item.start_date.split("T")[0]}</p>
                 <p>Rating: {item.score}</p>
                 <p>Episodes: {item.episodes}</p>
                 {item.rated && <p>Rated: {item.rated}</p>}
